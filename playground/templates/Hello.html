@@ -15,8 +15,8 @@
     <h1>Hello User</h1>
     {% endif %}
     <ul>
-        {% for product in products %}
-        <li>{{product.title}}</li>
+        {% for order in orders %}
+        <li>{{ order.id }} {{order.customer.first_name}}</li>
         {% endfor %}
     </ul>
 </body>
