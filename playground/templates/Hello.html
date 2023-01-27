@@ -14,11 +14,9 @@
     {% else %}
     <h1>Hello User</h1>
     {% endif %}
-    <ul>
-        {% for order in orders %}
-        <li>{{ order.id }} {{order.customer.first_name}}</li>
-        {% endfor %}
-    </ul>
+    <h2>{{ result.count }}</h2>
+    <h3>$ {{ result.min_price }}</h3>
+    <h4>$ {{ result.max_price }}</h4>
 </body>
 
 </html>
