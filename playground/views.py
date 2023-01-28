@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.contrib.contenttypes.models import ContentType
-from store.models import Product
-from tags.models import TaggedItem
+from store.models import Product, CartItem, Cart
+
 
 def say_hello(request): 
-    queryset = TaggedItem.objects.get_tags_for(Product, 1)
+    item1 = Cart.objects.get(pk=3)
+    item1.delete()
     
-    return render(request, 'hello.html', {'name':'Farzin', 'tags': list(queryset)})
+
+
+    return render(request, 'hello.html', {'name':'Farzin'})
