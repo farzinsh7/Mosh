@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.db.models.aggregates import Count, Min, Max, Sum, Avg
-from store.models import Product,  Order, OrderItem
+from django.db.models import Value, F, Func
+from django.db.models.functions import Concat
+from store.models import Product,  Order, OrderItem, Customer
 
 def say_hello(request):
-    result = Product.objects.filter(collection_id=3).aggregate(min_price=Min('unit_price'), max_price=Max('unit_price'), avg_price=Avg('unit_price'))
-    return render(request, 'hello.html', {'name':'Farzin', 'result': result})
+    queryset_1 = Customer.objects.annotate(full_name=Func(F('first_name'), Value(' '), F('last_name') , function='CONCAT'))
+    queryset = Customer.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
+    return render(request, 'hello.html', {'name':'Farzin', 'queryset': list(queryset)})
