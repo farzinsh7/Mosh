@@ -1,8 +1,12 @@
 from django.shortcuts import render
-from django.db.models import Value, F, ExpressionWrapper, DecimalField, Max, Count, Sum
-from store.models import Product,  Order, Customer, Collection
+from django.contrib.contenttypes.models import ContentType
+from store.models import Product
+from tags.models import TaggedItem
 
-def say_hello(request):
-    queryset = Product.objects.annotate(total_sell = Sum(F('orderitem__unit_price') * F('orderitem__quantity'))).order_by('-total_sell')[:5]
-
-    return render(request, 'hello.html', {'name':'Farzin', 'queryset': list(queryset)})
+def say_hello(request): 
+    content_type = ContentType.objects.get_for_model(Product)
+    queryset = TaggedItem.objects.select_related('tag').filter(
+        content_type=content_type,
+        object_id=1
+    )
+    return render(request, 'hello.html', {'name':'Farzin', 'tags': list(queryset)})
