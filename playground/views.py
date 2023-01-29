@@ -4,8 +4,7 @@ from store.models import Product, CartItem, Cart
 
 
 def say_hello(request): 
-    item1 = Cart.objects.get(pk=3)
-    item1.delete()
+    pass
     
 
 
