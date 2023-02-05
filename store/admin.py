@@ -17,11 +17,11 @@ class InventoryFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value() == '<10':
             return queryset.filter(inventory__lt = 10)
-
-
+    
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    actions = ['clear_inventory']
     list_display = ['title', 'unit_price', 'collection_title', 'inventory_status']
     list_editable = ['unit_price']
     list_select_related = ['collection']
@@ -36,6 +36,15 @@ class ProductAdmin(admin.ModelAdmin):
 
     def collection_title(self,product):
         return product.collection.title
+
+    
+    @admin.action(description='Clear inventory')
+    def clear_inventory(self, request, queryset):
+        updated_count= queryset.update(inventory = 0)
+        self.message_user(
+            request, 
+            f'{updated_count} products were successfully updated'
+            )
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
