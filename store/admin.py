@@ -9,6 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'unit_price', 'collection_title', 'inventory_status']
     list_editable = ['unit_price']
     list_select_related = ['collection']
+    search_fields = ['title__istartswith']
 
     @admin.display(ordering='inventory')
     def inventory_status(self, product):
@@ -23,8 +24,9 @@ class ProductAdmin(admin.ModelAdmin):
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'membership', 'orders_count']
     list_editable = ['membership']
-    ordering = ['first_name', 'last_name']
     list_per_page = 10
+    ordering = ['first_name', 'last_name']
+    search_fields = ['first_name__istartswith', 'last_name__istartswith']
 
 
     @admin.display(ordering='orders_count')
