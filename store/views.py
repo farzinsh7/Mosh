@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Collection
+from .serializers import ProductSerializer, CollectionSerializer
 
 @api_view()
 def product_list(request):
@@ -24,5 +24,7 @@ def product_detail(request, id):
 
 @api_view()
 def collection_detail(request, pk):
-    return Response('ok')
+    collection = get_object_or_404(Collection, id=pk)
+    serializer = CollectionSerializer(collection)
+    return Response(serializer.data)
     
