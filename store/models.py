@@ -28,7 +28,7 @@ class Product(models.Model):
         )
     inventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True)
-    collection = models.ForeignKey(Collection, on_delete = models.PROTECT)
+    collection = models.ForeignKey(Collection, on_delete = models.PROTECT, related_name='products')
     promotion = models.ManyToManyField(Promotion, blank=True)
 
     def __str__(self):
