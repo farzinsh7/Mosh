@@ -12,9 +12,18 @@ from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializ
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        collection_id = self.request.query_params.get('collection_id')
+        if collection_id is not None:
+            queryset = queryset.filter(collection_id=collection_id)
+            
+        return queryset
+    
+
+
     def get_serializer_context(self): 
         return {'request': self.request}
 
@@ -30,7 +39,7 @@ class CollectionViewSet(ModelViewSet):
 
     def delete(self, request, pk):
         collection = get_object_or_404(Collection.objects.annotate(products_count = Count('products')), pk=pk)
-        if collection.products.count() > 0:
+        if collection.objects.filter(product_id= kwargs['pk']).count() > 0:
             return Response({'error':'Collection can not be deleted beacuse it is associated with a product.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         collection.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)  
