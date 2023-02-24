@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'playground',
     'debug_toolbar',
     'store',
-    'store_custom',
     'tags',
     'like',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'storefront2',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'F@rzin123'
+        'PASSWORD': 'Farzin1369007'
     }
 }
 
@@ -143,3 +143,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
 }
+
+AUTH_USER_MODEL = 'core.User'
