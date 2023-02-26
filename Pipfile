@@ -27,6 +27,8 @@ pylint-django = "==2.5.3"
 pylint-plugin-utils = "==0.7"
 tomlkit = "==0.11.6"
 wrapt = "==1.14.1"
+djoser = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 pylint = "*"
